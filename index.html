@@ -52,7 +52,18 @@ const courses=[
 ];
 let active="All";
 const cats=["All",...new Set(courses.map(x=>x[1]))];
-function openCourse(url){if(tg?.openTelegramLink)tg.openTelegramLink(url);else window.open(url,"_blank")}
+function openCourse(url){
+  if (typeof show_11813727 !== 'function') {
+    alert('विज्ञापन अभी उपलब्ध नहीं है। कृपया थोड़ी देर बाद फिर कोशिश करें।');
+    return;
+  }
+  show_11813727().then(() => {
+    if (tg?.openTelegramLink) tg.openTelegramLink(url);
+    else window.open(url, "_blank");
+  }).catch(() => {
+    alert('कृपया विज्ञापन पूरा देखें। विज्ञापन बंद करने पर Course नहीं खुलेगा।');
+  });
+}
 function render(){
 document.getElementById("tabs").innerHTML=cats.map(c=>'<button class="tab '+(c===active?'active':'')+'" onclick="active='+JSON.stringify(c)+';render()">'+c+'</button>').join("");
 const q=document.getElementById("search").value.toLowerCase();
@@ -84,23 +95,6 @@ function watchPopupAd() {
 }
 
 // In-App Interstitial: Monetag controls the actual display/capping.
-function startInAppAds() {
-  if (typeof show_11813727 !== 'function') return;
-  show_11813727({
-    type: 'inApp',
-    inAppSettings: {
-      frequency: 2,
-      capping: 0.1,
-      interval: 30,
-      timeout: 5,
-      everyPage: false
-    }
-  });
-}
-
-window.addEventListener('load', function () {
-  setTimeout(startInAppAds, 1000);
-});
 </script>
 
 </body></html>
