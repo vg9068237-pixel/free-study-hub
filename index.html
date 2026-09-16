@@ -1,1 +1,106 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Free Study Hub</title><script src="https://telegram.org/js/telegram-web-app.js"></script><style>*{box-sizing:border-box}body{margin:0;font-family:Arial;background:#f4f6f8;color:#1f2937}.header{padding:24px 18px;background:#111827;color:white}.header h1{margin:0 0 6px}.search{padding:15px}.search input{width:100%;padding:13px;border:1px solid #ddd;border-radius:12px}.tabs{display:flex;gap:8px;overflow:auto;padding:0 15px 12px}.tabs button{border:0;border-radius:20px;padding:9px 14px;white-space:nowrap}.tabs .active{background:#111827;color:white}.list{padding:0 15px 25px}.card{background:white;border-radius:14px;padding:16px;margin:10px 0;box-shadow:0 2px 8px #00000010}.badge{font-size:12px;color:#6b7280}.card h3{margin:7px 0}.card p{font-size:14px;color:#6b7280}.btn{width:100%;padding:12px;border:0;border-radius:9px;background:#111827;color:white;font-weight:bold}</style></head><body><header class="header"><h1>🎓 Free Study Hub</h1><div>Free study resources in one place</div></header><div class="search"><input id="search" placeholder="🔎 Search course..." oninput="render()"></div><div class="tabs" id="tabs"></div><main class="list" id="list"></main><script>const tg=window.Telegram?.WebApp;if(tg){tg.ready();tg.expand()}const courses=[{"title":"PYQ & NCERT Quiz","category":"Rajasthan Exams","desc":"NCERT, PYQ and Rajasthan GK quiz resources.","url":"https://t.me/Dhimhi"},{"title":"Taiyari Karlo Family Batch","category":"Study Courses","desc":"Study course channel.","url":"https://t.me/Taiyari_Karlo_family_batch"},{"title":"SSC English 2026","category":"SSC","desc":"SSC English 2026 study resources.","url":"https://t.me/ssc_english_2026"},{"title":"Railway NTPC Batch","category":"Railway","desc":"Railway NTPC batch study resources.","url":"https://t.me/railwayntpc_batch"},{"title":"RSSB LDC Course","category":"Rajasthan Exams","desc":"RSSB LDC course resources.","url":"https://t.me/RSSB_LDC_COURSE"},{"title":"All Test Exam","category":"Test & Practice","desc":"Test and exam practice resources.","url":"https://t.me/all_test_exam"},{"title":"Rajasthan CET — Neev Batch","category":"Rajasthan CET","desc":"Rajasthan CET Neev Batch.","url":"https://t.me/RAJASTHAN_CET_NEEV_BATCH"},{"title":"REET Level 2 — SST","category":"REET Level 2","desc":"REET Level 2 SST course.","url":"https://t.me/SST_REET_LEVEL_2"},{"title":"Kalam — REET Level 2","category":"Kalam","desc":"Kalam REET Level 2 course.","url":"https://t.me/reetl2kalam"},{"title":"Kalam — CET GK","category":"Kalam","desc":"Kalam Rajasthan CET GK course.","url":"https://t.me/Kalam_cet_gk"},{"title":"Utkarsh — Batch","category":"Utkarsh","desc":"Utkarsh batch resources.","url":"https://t.me/Utkarshall_batch"},{"title":"Shivani Mam — LDC English","category":"Shivani Mam","desc":"VIPM Academy Shivani Mam LDC English. Free course.","url":"https://t.me/VIPM_SHIVANIMAM_LDCENGLISH"},{"title":"Booster Academy — Patwar","category":"Booster Academy","desc":"Booster Academy Patwar Batch.","url":"https://t.me/BOOSTER_ACADEMY_patwar_BATCH"}];let cat="All";function openCourse(u){if(tg)tg.openTelegramLink(u);else window.open(u,"_blank")}function render(){let cats=["All",...new Set(courses.map(x=>x.category))];tabs.innerHTML=cats.map(c=>`<button class="${c==cat?'active':''}" onclick="cat='${c}';render()">${c}</button>`).join("");let q=search.value.toLowerCase();let a=courses.filter(x=>(cat=="All"||x.category==cat)&&(x.title.toLowerCase().includes(q)||x.desc.toLowerCase().includes(q)));list.innerHTML=a.length?a.map(x=>`<article class="card"><span class="badge">📚 ${x.category}</span><h3>${x.title}</h3><p>${x.desc}</p><button class="btn" onclick="openCourse('${x.url}')">📖 Open Course</button></article>`).join(""):"<p>No courses found.</p>"}render();</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Free Study Hub</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src='//libtl.com/sdk.js' data-zone='11813727' data-sdk='show_11813727'></script>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f5f7;color:#172033}.header{background:#111827;color:white;padding:28px 18px}.header h1{margin:0;font-size:32px}.header p{margin:8px 0 0;font-size:17px}.wrap{max-width:760px;margin:auto;padding:20px 14px}.search{width:100%;padding:17px;border:1px solid #ddd;border-radius:18px;font-size:17px}.tabs{display:flex;gap:10px;overflow:auto;padding:16px 0}.tab{border:0;background:#e9ebef;border-radius:24px;padding:12px 18px;white-space:nowrap}.active{background:#111827;color:white}.card{background:white;border-radius:20px;padding:20px;margin:12px 0;box-shadow:0 3px 14px #00000012}.cat{color:#6b7280;font-size:14px}.title{font-size:23px;font-weight:700;margin:10px 0}.desc{color:#6b7280;line-height:1.45;margin-bottom:18px}.open{width:100%;padding:15px;border:0;border-radius:15px;background:#111827;color:white;font-size:16px;font-weight:700}
+
+.ad-box{margin:16px 0;padding:16px;border-radius:14px;border:1px solid #ddd;text-align:center}
+.ad-box h3{margin:0 0 8px}
+.ad-box p{margin:0 0 12px}
+.ad-buttons{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.ad-buttons button{padding:10px 14px;border:0;border-radius:10px;cursor:pointer}
+
+</style>
+</head>
+<body>
+<div class="header"><h1>🎓 Free Study Hub</h1><p>Free study resources in one place</p></div>
+<div class="wrap">
+<input id="search" class="search" placeholder="🔎 Search course..." oninput="render()">
+<div class="tabs" id="tabs"></div>
+<section id="monetag-ad-section" class="ad-box">
+  <h3>🎁 Free Study Hub Support</h3>
+  <p>ऐप को सपोर्ट करने के लिए आप चाहें तो विज्ञापन देख सकते हैं।</p>
+  <div class="ad-buttons">
+    <button onclick="watchRewardedAd()">▶️ Rewarded Ad देखें</button>
+    <button onclick="watchPopupAd()">🎁 Popup Ad देखें</button>
+  </div>
+</section>
+
+<div id="courses"></div>
+</div>
+<script>
+const tg=window.Telegram?.WebApp;if(tg){tg.ready();tg.expand();}
+const courses=[
+["PYQ & NCERT Quiz","Rajasthan Exams","NCERT, PYQ and Rajasthan GK quiz resources.","https://t.me/Dhimhi"],
+["Taiyari Karlo Family Batch","Study Courses","Study course channel.","https://t.me/Taiyari_Karlo_family_batch"],
+["SSC English 2026","SSC","SSC English preparation resources.","https://t.me/ssc_english_2026"],
+["Railway NTPC Batch","Railway","Railway NTPC preparation resources.","https://t.me/railwayntpc_batch"],
+["RSSB LDC Course","Rajasthan Exams","RSSB LDC preparation resources.","https://t.me/RSSB_LDC_COURSE"],
+["All Test Exam","Test & Practice","Test and exam practice resources.","https://t.me/all_test_exam"],
+["Rajasthan CET Neev Batch","Rajasthan Exams","Rajasthan CET preparation resources.","https://t.me/RAJASTHAN_CET_NEEV_BATCH"],
+["SST REET Level 2","REET","REET Level 2 SST preparation resources.","https://t.me/SST_REET_LEVEL_2"],
+["REET L2 Kalam","Kalam","Kalam REET Level 2 preparation resources.","https://t.me/reetl2kalam"],
+["Kalam CET GK","Kalam","Kalam CET GK preparation resources.","https://t.me/Kalam_cet_gk"],
+["Utkarsh Batch","Utkarsh","Utkarsh preparation batch resources.","https://t.me/Utkarshall_batch"],
+["Shivani Mam LDC English","Shivani Mam","Rising Star VIPM Academy — LDC English resources.","https://t.me/VIPM_SHIVANIMAM_LDCENGLISH"],
+["Booster Academy Patwar Batch","Booster Academy","Patwar preparation batch resources.","https://t.me/BOOSTER_ACADEMY_patwar_BATCH"]
+];
+let active="All";
+const cats=["All",...new Set(courses.map(x=>x[1]))];
+function openCourse(url){if(tg?.openTelegramLink)tg.openTelegramLink(url);else window.open(url,"_blank")}
+function render(){
+document.getElementById("tabs").innerHTML=cats.map(c=>'<button class="tab '+(c===active?'active':'')+'" onclick="active='+JSON.stringify(c)+';render()">'+c+'</button>').join("");
+const q=document.getElementById("search").value.toLowerCase();
+const list=courses.filter(x=>(active==="All"||x[1]===active)&&x.join(" ").toLowerCase().includes(q));
+document.getElementById("courses").innerHTML=list.length?list.map(x=>'<div class="card"><div class="cat">📚 '+x[1]+'</div><div class="title">'+x[0]+'</div><div class="desc">'+x[2]+'</div><button class="open" onclick="openCourse('+JSON.stringify(x[3])+')">📖 Open Course</button></div>').join(""):'<div style="text-align:center;padding:30px;color:#777">No course found.</div>';
+}
+render();
+</script>
+
+<script>
+function watchRewardedAd() {
+  if (typeof show_11813727 !== 'function') {
+    alert('विज्ञापन अभी लोड नहीं हुआ है। कुछ सेकंड बाद फिर कोशिश करें।');
+    return;
+  }
+  show_11813727().then(() => {
+    alert('धन्यवाद! आपने विज्ञापन देख लिया।');
+  }).catch(() => {});
+}
+
+function watchPopupAd() {
+  if (typeof show_11813727 !== 'function') {
+    alert('विज्ञापन अभी लोड नहीं हुआ है। कुछ सेकंड बाद फिर कोशिश करें।');
+    return;
+  }
+  show_11813727('pop').then(() => {
+    // Rewarded Popup completed.
+  }).catch(() => {});
+}
+
+// In-App Interstitial: Monetag controls the actual display/capping.
+function startInAppAds() {
+  if (typeof show_11813727 !== 'function') return;
+  show_11813727({
+    type: 'inApp',
+    inAppSettings: {
+      frequency: 2,
+      capping: 0.1,
+      interval: 30,
+      timeout: 5,
+      everyPage: false
+    }
+  });
+}
+
+window.addEventListener('load', function () {
+  setTimeout(startInAppAds, 1000);
+});
+</script>
+
+</body></html>
