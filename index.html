@@ -22,15 +22,6 @@
 <div class="wrap">
 <input id="search" class="search" placeholder="🔎 Search course..." oninput="render()">
 <div class="tabs" id="tabs"></div>
-<section id="monetag-ad-section" class="ad-box">
-  <h3>🎁 Free Study Hub Support</h3>
-  <p>ऐप को सपोर्ट करने के लिए आप चाहें तो विज्ञापन देख सकते हैं।</p>
-  <div class="ad-buttons">
-    <button onclick="watchRewardedAd()">▶️ Rewarded Ad देखें</button>
-    <button onclick="watchPopupAd()">🎁 Popup Ad देखें</button>
-  </div>
-</section>
-
 <div id="courses"></div>
 </div>
 <script>
@@ -52,17 +43,34 @@ const courses=[
 ];
 let active="All";
 const cats=["All",...new Set(courses.map(x=>x[1]))];
-function openCourse(url){
-  if (typeof show_11813727 !== 'function') {
-    alert('विज्ञापन अभी उपलब्ध नहीं है। कृपया थोड़ी देर बाद फिर कोशिश करें।');
+async function openCourse(url){
+  const adFn = window.show_11813727;
+  if (typeof adFn !== 'function') {
+    alert('विज्ञापन अभी उपलब्ध नहीं है। कुछ सेकंड बाद फिर कोशिश करें।');
     return;
   }
-  show_11813727().then(() => {
-    if (tg?.openTelegramLink) tg.openTelegramLink(url);
-    else window.open(url, "_blank");
-  }).catch(() => {
-    alert('कृपया विज्ञापन पूरा देखें। विज्ञापन बंद करने पर Course नहीं खुलेगा।');
-  });
+
+  try {
+    await adFn();
+
+    // Open the Telegram destination only after the rewarded ad resolves.
+    if (window.Telegram && window.Telegram.WebApp) {
+      if (typeof window.Telegram.WebApp.openTelegramLink === 'function') {
+        window.Telegram.WebApp.openTelegramLink(url);
+        return;
+      }
+      if (typeof window.Telegram.WebApp.openLink === 'function') {
+        window.Telegram.WebApp.openLink(url);
+        return;
+      }
+    }
+
+    // Browser fallback outside Telegram.
+    const w = window.open(url, '_blank', 'noopener,noreferrer');
+    if (!w) window.location.href = url;
+  } catch (e) {
+    alert('विज्ञापन पूरा नहीं हुआ, इसलिए Course नहीं खोला गया।');
+  }
 }
 function render(){
 document.getElementById("tabs").innerHTML=cats.map(c=>'<button class="tab '+(c===active?'active':'')+'" onclick="active='+JSON.stringify(c)+';render()">'+c+'</button>').join("");
@@ -71,30 +79,6 @@ const list=courses.filter(x=>(active==="All"||x[1]===active)&&x.join(" ").toLowe
 document.getElementById("courses").innerHTML=list.length?list.map(x=>'<div class="card"><div class="cat">📚 '+x[1]+'</div><div class="title">'+x[0]+'</div><div class="desc">'+x[2]+'</div><button class="open" onclick="openCourse('+JSON.stringify(x[3])+')">📖 Open Course</button></div>').join(""):'<div style="text-align:center;padding:30px;color:#777">No course found.</div>';
 }
 render();
-</script>
-
-<script>
-function watchRewardedAd() {
-  if (typeof show_11813727 !== 'function') {
-    alert('विज्ञापन अभी लोड नहीं हुआ है। कुछ सेकंड बाद फिर कोशिश करें।');
-    return;
-  }
-  show_11813727().then(() => {
-    alert('धन्यवाद! आपने विज्ञापन देख लिया।');
-  }).catch(() => {});
-}
-
-function watchPopupAd() {
-  if (typeof show_11813727 !== 'function') {
-    alert('विज्ञापन अभी लोड नहीं हुआ है। कुछ सेकंड बाद फिर कोशिश करें।');
-    return;
-  }
-  show_11813727('pop').then(() => {
-    // Rewarded Popup completed.
-  }).catch(() => {});
-}
-
-// In-App Interstitial: Monetag controls the actual display/capping.
 </script>
 
 </body></html>
