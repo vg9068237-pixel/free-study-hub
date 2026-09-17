@@ -82,34 +82,65 @@ function openTelegramCourse(url){
   }
 }
 
-async function openCourse(url,button){
-  if(button?.disabled)return;
-
-  if(button){
-    button.disabled=true;
-    button.textContent="⏳ Preparing...";
-  }
-
-  try{
-    const showAd=await waitForMonetag(20000);
-
-    /* Use the official Monetag preload flow when available. */
-    if(monetagPreload){
-      try{ await monetagPreload; }catch(e){}
+async async function openCourse(url,button){
+  try {
+    if (button) {
+      button.disabled = true;
+      button.textContent = "⏳ Loading Ad...";
     }
 
-    await showAd();
-    openTelegramCourse(url);
-
-    /* Prepare the next ad in the background. */
-    monetagPreload=showAd({type:"preload"}).catch(()=>null);
-  }catch(e){
-    alert("विज्ञापन अभी उपलब्ध नहीं है। कृपया थोड़ी देर बाद फिर कोशिश करें।");
-  }finally{
-    if(button){
-      button.disabled=false;
-      button.textContent="▶️ Open Course";
+    // Wait for Monetag SDK to become available.
+    let tries = 0;
+    while (typeof window.show_11813727 !== "function" && tries < 40) {
+      await new Promise(r => setTimeout(r, 500));
+      tries++;
     }
+
+    if (typeof window.show_11813727 !== "function") {
+      if (button) {
+        button.disabled = false;
+        button.textContent = "▶️ Open Resource";
+      }
+      alert("विज्ञापन अभी लोड नहीं हुआ है। कृपया कुछ सेकंड बाद फिर कोशिश करें।");
+      return;
+    }
+
+    // Rewarded ad: course opens only after the ad Promise resolves.
+    await window.show_11813727();
+
+    if (button) {
+      button.textContent = "🚀 Opening...";
+    }
+
+    // Telegram-compatible link opening.
+    if (window.Telegram && window.Telegram.WebApp) {
+      const tg = window.Telegram.WebApp;
+      if (typeof tg.openTelegramLink === "function") {
+        tg.openTelegramLink(url);
+      } else if (typeof tg.openLink === "function") {
+        tg.openLink(url);
+      } else {
+        window.location.href = url;
+      }
+    } else {
+      window.open(url, "_blank");
+    }
+
+    // Prepare the next ad without blocking the course opening.
+    setTimeout(() => {
+      try {
+        if (typeof window.show_11813727 === "function") {
+          window.show_11813727({type:"preload"}).catch(() => {});
+        }
+      } catch(e) {}
+    }, 500);
+
+  } catch (e) {
+    if (button) {
+      button.disabled = false;
+      button.textContent = "▶️ Open Resource";
+    }
+    alert("विज्ञापन पूरा नहीं हो पाया। कृपया फिर कोशिश करें।");
   }
 }
 
