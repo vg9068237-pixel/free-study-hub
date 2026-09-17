@@ -1,28 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Free Study Hub</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script src='//libtl.com/sdk.js' data-zone='11813727' data-sdk='show_11813727'></script>
-<style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f5f7;color:#172033}.header{background:#111827;color:white;padding:28px 18px}.header h1{margin:0;font-size:32px}.header p{margin:8px 0 0;font-size:17px}.wrap{max-width:760px;margin:auto;padding:20px 14px}.search{width:100%;padding:17px;border:1px solid #ddd;border-radius:18px;font-size:17px}.tabs{display:flex;gap:10px;overflow:auto;padding:16px 0}.tab{border:0;background:#e9ebef;border-radius:24px;padding:12px 18px;white-space:nowrap}.active{background:#111827;color:white}.card{background:white;border-radius:20px;padding:20px;margin:12px 0;box-shadow:0 3px 14px #00000012}.cat{color:#6b7280;font-size:14px}.title{font-size:23px;font-weight:700;margin:10px 0}.desc{color:#6b7280;line-height:1.45;margin-bottom:18px}.open{width:100%;padding:15px;border:0;border-radius:15px;background:#111827;color:white;font-size:16px;font-weight:700}
-
-.ad-box{margin:16px 0;padding:16px;border-radius:14px;border:1px solid #ddd;text-align:center}
-.ad-box h3{margin:0 0 8px}
-.ad-box p{margin:0 0 12px}
-.ad-buttons{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.ad-buttons button{padding:10px 14px;border:0;border-radius:10px;cursor:pointer}
-
-</style>
-</head>
-<body>
-<div class="header"><h1>🎓 Free Study Hub</h1><p>Free study resources in one place</p></div>
+<script src="https://libtl.com/sdk.js" data-zone="11813727" data-sdk="show_11813727"></script>
+<style>*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f6f8;color:#172033}.header{background:#111827;color:#fff;padding:25px 18px}.header h1{margin:0;font-size:29px}.header p{margin:7px 0 0;color:#dbe2ea}.wrap{max-width:760px;margin:auto;padding:18px 14px 35px}.search{width:100%;padding:15px 17px;border:1px solid #d9dee5;border-radius:16px;font-size:16px;outline:none;background:#fff}.section-title{margin:22px 2px 10px;font-size:20px;font-weight:700}.tabs{display:flex;gap:9px;overflow-x:auto;padding:8px 0 14px;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}.tab{border:0;background:#e5e7eb;border-radius:22px;padding:10px 15px;white-space:nowrap;font-size:14px}.tab.active{background:#111827;color:#fff}.card{background:#fff;border-radius:18px;padding:18px;margin:12px 0;box-shadow:0 3px 14px #00000010}.cat{font-size:13px;color:#667085}.title{font-size:20px;font-weight:700;margin:8px 0}.desc{font-size:14px;line-height:1.5;color:#667085;margin-bottom:15px}.open{width:100%;padding:14px;border:0;border-radius:13px;background:#111827;color:#fff;font-size:16px;font-weight:700}.open:disabled{opacity:.65}.empty{text-align:center;padding:30px;color:#667085}.notice{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:14px;margin-top:18px;font-size:13px;line-height:1.5;color:#667085}.footer{text-align:center;color:#667085;font-size:13px;padding:18px 0}</style>
+</head><body>
+<div class="header"><h1>📚 Free Study Hub</h1><p>Your Digital Study Platform</p></div>
 <div class="wrap">
-<input id="search" class="search" placeholder="🔎 Search course..." oninput="render()">
-<div class="tabs" id="tabs"></div>
+<input id="search" class="search" type="search" placeholder="🔎 Search Study Resources" autocomplete="off">
+<div class="section-title">🔥 Featured</div>
+<div class="section-title">🎯 EXAM CATEGORIES</div><div class="tabs" id="tabs"></div>
 <div id="courses"></div>
+<div class="notice">📌 Course/Resource खोलने के लिए पहले Rewarded Ad पूरा करना होगा। Ad पूरा होने के बाद चुना हुआ Telegram resource खुलेगा।</div>
+<div class="footer">📚 Free Study Hub<br>Learn • Prepare • Grow 🚀</div>
+<script>
+/* Monetag is loaded in the background. Course buttons wait for it automatically. */
+</script>
 </div>
 <script>
 const tg=window.Telegram?.WebApp;if(tg){tg.ready();tg.expand();}
@@ -37,48 +32,89 @@ const courses=[
 ["SST REET Level 2","REET","REET Level 2 SST preparation resources.","https://t.me/SST_REET_LEVEL_2"],
 ["REET L2 Kalam","Kalam","Kalam REET Level 2 preparation resources.","https://t.me/reetl2kalam"],
 ["Kalam CET GK","Kalam","Kalam CET GK preparation resources.","https://t.me/Kalam_cet_gk"],
-["Utkarsh Batch","Utkarsh","Utkarsh preparation batch resources.","https://t.me/Utkarshall_batch"],
+["Utkarsh Batch","Utkarsh","Utkarsh preparation resources.","https://t.me/Utkarshall_batch"],
 ["Shivani Mam LDC English","Shivani Mam","Rising Star VIPM Academy — LDC English resources.","https://t.me/VIPM_SHIVANIMAM_LDCENGLISH"],
-["Booster Academy Patwar Batch","Booster Academy","Patwar preparation batch resources.","https://t.me/BOOSTER_ACADEMY_patwar_BATCH"]
-];
-let active="All";
-const cats=["All",...new Set(courses.map(x=>x[1]))];
-async function openCourse(url){
-  const adFn = window.show_11813727;
-  if (typeof adFn !== 'function') {
-    alert('विज्ञापन अभी उपलब्ध नहीं है। कुछ सेकंड बाद फिर कोशिश करें।');
-    return;
+["Booster Academy Patwar Batch","Booster Academy","Patwar preparation resources.","https://t.me/BOOSTER_ACADEMY_patwar_BATCH"]];
+let active="All";const cats=["All",...new Set(courses.map(x=>x[1]))];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+function render(){document.getElementById("tabs").innerHTML=cats.map(c=>`<button class="tab ${c===active?"active":""}" data-cat="${esc(c)}">${esc(c)}</button>`).join("");const q=document.getElementById("search").value.trim().toLowerCase();const list=courses.filter(x=>(active==="All"||x[1]===active)&&x.join(" ").toLowerCase().includes(q));document.getElementById("courses").innerHTML=list.length?list.map((x,i)=>`<div class="card"><div class="cat">📚 ${esc(x[1])}</div><div class="title">${esc(x[0])}</div><div class="desc">${esc(x[2])}</div><button class="open" data-index="${courses.indexOf(x)}">▶️ Open Course</button></div>`).join(""):`<div class="empty">कोई matching resource नहीं मिला।<br>दूसरा keyword try करें।</div>`;}
+document.getElementById("search").addEventListener("input",render);document.getElementById("tabs").addEventListener("click",e=>{const b=e.target.closest(".tab");if(!b)return;active=b.dataset.cat;render();});document.getElementById("courses").addEventListener("click",e=>{const b=e.target.closest(".open");if(!b)return;const x=courses[Number(b.dataset.index)];if(x)openCourse(x[3],b);});
+let monetagReady = false;
+let monetagPreload = null;
+
+function waitForMonetag(timeout=20000){
+  return new Promise((resolve,reject)=>{
+    const start=Date.now();
+    const check=()=>{
+      if(typeof window.show_11813727==="function"){
+        resolve(window.show_11813727);
+        return;
+      }
+      if(Date.now()-start >= timeout){
+        reject(new Error("Monetag SDK did not load"));
+        return;
+      }
+      setTimeout(check,300);
+    };
+    check();
+  });
+}
+
+async function preloadMonetag(){
+  try{
+    const showAd=await waitForMonetag(20000);
+    monetagPreload=showAd({type:"preload"});
+    await monetagPreload;
+    monetagReady=true;
+  }catch(e){
+    monetagReady=false;
+    monetagPreload=null;
+  }
+}
+
+function openTelegramCourse(url){
+  if(tg && typeof tg.openTelegramLink==="function"){
+    tg.openTelegramLink(url);
+  }else if(tg && typeof tg.openLink==="function"){
+    tg.openLink(url);
+  }else{
+    window.location.href=url;
+  }
+}
+
+async function openCourse(url,button){
+  if(button?.disabled)return;
+
+  if(button){
+    button.disabled=true;
+    button.textContent="⏳ Preparing...";
   }
 
-  try {
-    await adFn();
+  try{
+    const showAd=await waitForMonetag(20000);
 
-    // Open the Telegram destination only after the rewarded ad resolves.
-    if (window.Telegram && window.Telegram.WebApp) {
-      if (typeof window.Telegram.WebApp.openTelegramLink === 'function') {
-        window.Telegram.WebApp.openTelegramLink(url);
-        return;
-      }
-      if (typeof window.Telegram.WebApp.openLink === 'function') {
-        window.Telegram.WebApp.openLink(url);
-        return;
-      }
+    /* Use the official Monetag preload flow when available. */
+    if(monetagPreload){
+      try{ await monetagPreload; }catch(e){}
     }
 
-    // Browser fallback outside Telegram.
-    const w = window.open(url, '_blank', 'noopener,noreferrer');
-    if (!w) window.location.href = url;
-  } catch (e) {
-    alert('विज्ञापन पूरा नहीं हुआ, इसलिए Course नहीं खोला गया।');
+    await showAd();
+    openTelegramCourse(url);
+
+    /* Prepare the next ad in the background. */
+    monetagPreload=showAd({type:"preload"}).catch(()=>null);
+  }catch(e){
+    alert("विज्ञापन अभी उपलब्ध नहीं है। कृपया थोड़ी देर बाद फिर कोशिश करें।");
+  }finally{
+    if(button){
+      button.disabled=false;
+      button.textContent="▶️ Open Course";
+    }
   }
 }
-function render(){
-document.getElementById("tabs").innerHTML=cats.map(c=>'<button class="tab '+(c===active?'active':'')+'" onclick="active='+JSON.stringify(c)+';render()">'+c+'</button>').join("");
-const q=document.getElementById("search").value.toLowerCase();
-const list=courses.filter(x=>(active==="All"||x[1]===active)&&x.join(" ").toLowerCase().includes(q));
-document.getElementById("courses").innerHTML=list.length?list.map(x=>'<div class="card"><div class="cat">📚 '+x[1]+'</div><div class="title">'+x[0]+'</div><div class="desc">'+x[2]+'</div><button class="open" onclick="openCourse('+JSON.stringify(x[3])+')">📖 Open Course</button></div>').join(""):'<div style="text-align:center;padding:30px;color:#777">No course found.</div>';
-}
-render();
-</script>
 
-</body></html>
+render();
+
+/* Preload as soon as the SDK becomes available, so the first course click is faster. */
+preloadMonetag();
+</script></body></html>
